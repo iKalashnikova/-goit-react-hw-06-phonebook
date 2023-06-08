@@ -51,7 +51,7 @@ const App = () => {
     const normalizedFilter = typeof filter === 'string' ? filter.toLowerCase() : '';
 
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+      contact.name && contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
 
