@@ -1,40 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormEl, LabelEl, InputContact, InputSubmit } from './Form.styled';
-import { resetForm, setName, setNumber } from '../redux/formSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../redux/slice';
+import { addContact } from 'components/redux/slice';
+import { useDispatch } from 'react-redux';
 
 const ContactForm = ({ onSubmit }) => {
+  const [name, setIsName] = useState('');
+  const [number, setIsNumber] = useState('');
 
   const dispatch = useDispatch();
-  const name = useSelector(state => state.contactForm.name);
-  const number = useSelector(state => state.contactForm.number);
-
-
 
   const handleInputСhange = event => {
     const { name, value } = event.target;
     if (name === 'name') {
-      dispatch(setName(value));
+      setIsName(value);
     } else if (name === 'number') {
-      dispatch(setNumber(value));
+      setIsNumber(value);
     }
   };
-
-  useEffect(() => {
-    if (name && number) {
-      onSubmit({ name, number });
-      dispatch(resetForm());
-    }
-  }, [onSubmit, name, number, dispatch]);
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContact({name, number}));
+    reset()
   };
 
+  const reset = () => {
+    setIsName('');
+    setIsNumber('');
+  };
 
   return (
     <FormEl onSubmit={handleSubmit}>
@@ -45,7 +40,7 @@ const ContactForm = ({ onSubmit }) => {
           onChange={handleInputСhange}
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Zа-яА-Я]+([' -][a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
@@ -57,7 +52,7 @@ const ContactForm = ({ onSubmit }) => {
           onChange={handleInputСhange}
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="[\+]?[\d\s.-]+"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />

@@ -13,7 +13,7 @@ export const ContactList = ({contacts}) => {
                 <ContactName>
                   {name}: {number}
                 </ContactName>
-                <DeleteBtn type="button" onClick={() => dispatch(deleteContact())}>
+                <DeleteBtn type="button" onClick={() => dispatch(deleteContact(id))}>
         Delete
       </DeleteBtn>
       </ContactItem>
