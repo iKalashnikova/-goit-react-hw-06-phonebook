@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 import { FormEl, LabelEl, InputContact, InputSubmit } from './Form.styled';
 import { addContact } from 'components/redux/slice';
 import { useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 
 const ContactForm = ({ onSubmit }) => {
   const [name, setIsName] = useState('');
   const [number, setIsNumber] = useState('');
 
   const dispatch = useDispatch();
+  
+  const contact = {
+    id: nanoid(),
+    name: name,
+    number: number,
+  };
 
   const handleInputСhange = event => {
     const { name, value } = event.target;
@@ -22,10 +29,9 @@ const ContactForm = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    dispatch(addContact({name, number}));
+    onSubmit(contact);;
     reset()
   };
-
   const reset = () => {
     setIsName('');
     setIsNumber('');
@@ -40,7 +46,7 @@ const ContactForm = ({ onSubmit }) => {
           onChange={handleInputСhange}
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+([' -][a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Z]+([' -][a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
