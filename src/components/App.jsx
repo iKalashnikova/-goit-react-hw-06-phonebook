@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import ContactForm from './Form/form';

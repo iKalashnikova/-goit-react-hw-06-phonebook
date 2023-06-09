@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormEl, LabelEl, InputContact, InputSubmit } from './Form.styled';
-import { addContact } from 'components/redux/slice';
-import { useDispatch } from 'react-redux';
+// import { addContact } from 'components/redux/slice';
+// import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 const ContactForm = ({ onSubmit }) => {
   const [name, setIsName] = useState('');
   const [number, setIsNumber] = useState('');
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   
   const contact = {
     id: nanoid(),
