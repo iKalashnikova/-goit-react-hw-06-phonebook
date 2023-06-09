@@ -14,16 +14,16 @@ const App = () => {
   const contacts = useSelector(state => state.friend.contacts);
   const filter = useSelector(state => state.friend.filter);
 
-  // useEffect(() => {
-  //   const contacts = localStorage.getItem('contacts');
-  //   if (contacts) {
-  //     dispatch(addContact(JSON.parse(contacts)));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    const contacts = localStorage.getItem('contacts');
+    if (contacts) {
+      dispatch(addContact(JSON.parse(contacts)));
+    }
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleAddContact = newContact => {
     console.log(newContact);
@@ -49,14 +49,15 @@ const App = () => {
   };
 
   const getVisibleContacts = () => {
-    const normalizedFilter = typeof filter === 'string' ? filter.toLowerCase() : '';
+    const normalizedFilter = filter.toLowerCase();
 
-    return contacts.filter(contact =>
-      contact.name && contact.name.toLowerCase().includes(normalizedFilter)
-    );
+    return contacts
+    .filter(contact => contact.name && contact.name.toLowerCase().includes(normalizedFilter))
+    
   };
 
   const visibleContact = getVisibleContacts();
+  console.log(visibleContact);
 
   return (
     <div
@@ -79,7 +80,6 @@ const App = () => {
         <Filter value={filter} onChange={handleChangeFilter} />
         <ContactList
           contacts={visibleContact}
-        
         />
       </div>
     </div>
